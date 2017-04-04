@@ -1,0 +1,28 @@
+﻿library ieee;
+use ieee.std_logic_1164.all;
+use ieee.std_logic_arith.all;
+--use ieee.std_logic_unsigned.all;
+
+entity clock is
+	port
+	(
+		clk		:in 	bit;
+		freq1	:out 	bit;
+		freq2	:out 	bit
+	);
+end clock;
+
+architecture clock_arch of clock is
+begin
+
+	process(clk)
+	variable clk_cnt : bit_vector(28 downto 0); 
+	begin
+		if rising_edge(clk) then
+			clk_cnt := clk_cnt + 1;
+			freq1 := clk_cnt(25);
+			freq2 := clk_cnt(26);
+		end if;
+	end process;
+
+end clock_arch;

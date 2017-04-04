@@ -1,0 +1,37 @@
+﻿library ieee;
+use ieee.std_logic_1164.all;
+use ieee.std_logic_arith.all;
+--use ieee.std_logic_unsigned.all;
+
+--接入的时钟应为10-20ms
+entity key_scan is
+	port
+	(
+		clk_20ms		:in		bit;	
+		col_scan:in		bit_vector(3 downto 0);
+		row_scan:out	bit_vector(3 downto 0);
+		key_out	:out 	bit_vector(15 downto 0);
+		key_flag:out 	bit
+	);
+end key_scan;
+
+architecture key_scan_arch of key_scan is
+	row_scan := 4'b1110;
+	process(clk_20ms)
+	begin
+		if risingedge(clk_20ms) then 
+			row_scan sla 1;
+			case row_scan is
+				when 14 => key_out[3:0] <= col_scan;
+				when 13 => key_out[7:4] <= col_scan;
+				when 11 => key_out[11:8] <= col_scan;
+				when 7  => key_out[15:12] <= col_scan;
+			end case;
+			if key_out /= 16'b1111_1111_1111_1111 then	????
+				key_flag <= 1;
+			else
+				key_flag <= 0;
+			end if;
+		end if;
+	end process;
+end key_scan_arch;
