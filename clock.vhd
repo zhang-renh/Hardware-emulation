@@ -20,7 +20,7 @@ begin
 	begin
 		if rising_edge(clk) then
 			clk_cnt := clk_cnt + 1;
-			time_20ms := clk_cnt(18);		--大约20ms
+			time_5ms := clk_cnt(14);		--大约5ms
 			time_1s := clk_cnt(24);		--大约1s
 		end if;
 	end process;

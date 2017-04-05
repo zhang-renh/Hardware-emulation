@@ -7,30 +7,30 @@ use ieee.std_logic_arith.all;
 entity key_scan is
 	port
 	(
-		clk_20ms		:in		bit;	
-		col_scan:in		bit_vector(3 downto 0);
-		row_scan:out	bit_vector(3 downto 0);
-		key_out	:out 	bit_vector(15 downto 0);--???buffer
-		key_flag:out 	bit
+		clk_5ms		:in		bit;	
+		col_scan	:in		bit_vector(3 downto 0);
+		row_scan	:out	bit_vector(3 downto 0);
+		key_out		:out 	bit_vector(15 downto 0);--???buffer
+		key_flag	:out 	bit
 	);
 end key_scan;
 
 architecture key_scan_arch of key_scan is
 	row_scan := 4'b1110;
-	process(clk_20ms)
+	process(clk_5ms)
 	begin
-		if risingedge(clk_20ms) then 
+		if risingedge(clk_5ms) then 
 			row_scan sla 1;
 			case row_scan is
-				when 14 => key_out[3:0] <= col_scan;
-				when 13 => key_out[7:4] <= col_scan;
-				when 11 => key_out[11:8] <= col_scan;
-				when 7  => key_out[15:12] <= col_scan;
+				when 14 => key_out[3:0] = col_scan;
+				when 13 => key_out[7:4] = col_scan;
+				when 11 => key_out[11:8] = col_scan;
+				when 7  => key_out[15:12] = col_scan;
 			end case;
 			if key_out /= 16'b1111_1111_1111_1111 then	--????
-				key_flag <= 1;
+				key_flag = 1;
 			else
-				key_flag <= 0;
+				key_flag = 0;
 			end if;
 		end if;
 	end process;
