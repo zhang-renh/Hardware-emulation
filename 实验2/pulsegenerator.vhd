@@ -1,0 +1,37 @@
+﻿--Author = Zhang Renhui
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.std_logic_arith.all;
+--use ieee.std_logic_unsigned.all;
+use ieee.std_logic_signed.all;
+
+entity pulse_gen is
+port
+(
+	clk_in		:in 	std_logic;
+	rst_in		:in 	std_logic;
+	pulse_out	:out 	std_logic;
+);
+end plus_gen;
+
+architecture pulse_gen_arc of plus_gen is
+	signal count1	:	std_logic_vector(17 downto 0);--???
+	signal count2	:	std_logic_vector(25 downto 0);
+begin
+	process(clk_in,rst_in)
+	begin
+		if rising_edge(clk_in) then
+			count1 <= count1 + 1;
+			count2 <= count2 + 1;
+		elsif rising_edge(rst_in) then
+			count1 <= 0;
+			count2 <= 0;
+		end if;
+	end process;
+	
+	if count1(17 downto 12) > count2(25 downto 20) then
+		pulse_out <= 1;
+	else 
+		pulse_out <= 0;
+	end if;
+end;

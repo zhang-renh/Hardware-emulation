@@ -80,7 +80,7 @@ begin
 				when "110" => in_data(15) <= not in_data(5);
 				when others => in_data(15) <= '0';
 			end case;
-		
+			--16位数据传输
 			case count is
 				when "00000" => sck <= '0'; data <= in_data(0);
 				when "00001" => sck <= '1';

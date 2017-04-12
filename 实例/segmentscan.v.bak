@@ -133,8 +133,8 @@ always@(posedge clk_in or negedge rst_n_in) begin
 						default: state <= IDLE;
 					endcase
 				end
-					if(clk_div) begin
 			WRITE:begin
+					if(clk_div) begin
 						if(cnt_write >= 6'd33) cnt_write <= 1'b0;
 						else cnt_write <= cnt_write + 1'b1;
 						case(cnt_write)
